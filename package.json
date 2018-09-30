@@ -1,6 +1,9 @@
 {
   "name": "express-socket-poker",
   "version": "1.0.0",
+  "engines": {
+    "node": "10.9.0"
+  },
   "private": true,
   "scripts": {
     "dev": "nodemon ./web/server.js",
