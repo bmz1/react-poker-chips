@@ -1,0 +1,15 @@
+html {
+  min-height: 100wh;
+  width: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f8f8ff;
+  font-family: 'Open Sans', sans-serif;
+  min-height: 100wh;
+}
+
+a {
+  text-decoration: none;
+}

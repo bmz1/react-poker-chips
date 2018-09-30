@@ -1,0 +1,75 @@
+.ranking {
+  padding: 20px;
+}
+
+.deck {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 30px;
+  padding-top: 30px;
+}
+
+.card {
+  position: relative;
+  width: 75px;
+  height: 100px;
+  float: left;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-radius: 2px;
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+}
+
+.card-suit {
+  width: 100%;
+  display: block;
+}
+
+.card-suit-top {
+  text-align: left;
+  padding-left: 5px;
+}
+
+.card-suit-bottom {
+  position: absolute;
+  bottom: 0px;
+  text-align: left;
+  transform: rotate(180deg);
+  padding-left: 5px;
+}
+
+.card-number {
+  width: 100%;
+  position: absolute;
+  top: 38%;
+  text-align: center;
+}
+
+.red {
+  color: #ff0000;
+}
+
+.black {
+  color: #000;
+}
+
+@media (max-width: 1210px) {
+  .deck {
+    position: initial;
+    top: 0;
+    margin-left: 5px;
+  }
+  .ranking {
+    padding: 5px;
+  }
+  .card {
+    position: relative;
+    width: 60px;
+    height: 90px;
+    float: left;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 2px;
+    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  }
+}

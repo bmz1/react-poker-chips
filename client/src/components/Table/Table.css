@@ -1,0 +1,125 @@
+.table {
+}
+
+.header {
+  margin-top: 10px;
+  text-align: center;
+  padding: 20px;
+  font-size: 1.5rem;
+}
+
+.text-area {
+  max-width: 600px;
+  height: 250px;
+  display: block;
+  margin: 0 auto;
+  padding: 5px;
+  background-color: #f8f8ff;
+  font-size: 16px;
+  overflow: auto;
+  border: 1px solid #dddddd;
+}
+
+@keyframes FadeIn {
+  from {
+    background-color: #faebcc;
+  }
+
+  to {
+    background-color: transparent;
+  }
+}
+
+.text-area li {
+  transition: all 0.4s ease-out;
+  padding: 5px;
+  opacity: 0;
+  height: 1.5em;
+}
+
+.text-area p {
+  background-color: #faebcc;
+}
+
+.text-area li.show {
+  opacity: 1;
+}
+
+.text-area li:last-child {
+  padding-bottom: 5px;
+  animation: FadeIn 1s ease-in-out forwards;
+  background-color: #faebcc;
+}
+
+.action-buttons {
+  display: block;
+  width: 600px;
+  margin: 0 auto;
+}
+
+.action-btn {
+  display: block;
+  width: 600px;
+  margin: 0 auto;
+}
+
+.scoreboard {
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.chip-status {
+  width: 600px;
+  height: 35px;
+  margin: 0 auto;
+  
+}
+.pot {
+  
+  float: left;
+}
+
+.your-chips {
+  
+  float: right;
+}
+@media (max-width: 1210px) {
+  .header {
+    margin-top: 10px;
+    text-align: center;
+    padding: 20px;
+    font-size: 1rem;
+  }
+
+  .text-area {
+    min-width: 300px;
+    min-height: 150px;
+    display: block;
+    margin: 0 auto;
+    background-color: #f8f8ff;
+    font-size: 12px;
+  }
+
+  .text-area li:first-child {
+    padding-bottom: 30px;
+  }
+
+  .action-buttons {
+    display: block;
+    width: 250px;
+    padding-top: 10px;
+    margin: 0 auto;
+  }
+
+  .action-btn {
+    display: block;
+    width: 100%;
+  }
+  .chip-status {
+    width: 300px;
+    height: 35px;
+    
+    
+  }
+}

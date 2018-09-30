@@ -1,0 +1,20 @@
+{
+  "name": "express-socket-poker",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon ./web/server.js",
+    "start": "node ./web/server.js"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "dotenv": "^6.0.0",
+    "express": "~4.16.0",
+    "morgan": "~1.9.0",
+    "nodemon": "^1.18.4",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1",
+    "winston": "^3.1.0"
+  }
+}

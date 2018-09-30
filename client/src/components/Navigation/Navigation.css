@@ -1,0 +1,47 @@
+.topnav {
+  overflow: hidden;
+  background-color: #000;
+  color: white;
+}
+
+.topnav a,
+.topnav span {
+  float: left;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.topnav a:hover,
+.topnav span:hover {
+  background-color: rgba(109, 109, 109, 0.932);
+  color: white;
+}
+
+.selected {
+  background-color: rgba(109, 109, 109, 0.932);
+  color: white !important;
+}
+
+.logout-button {
+  border: none;
+  background: inherit;
+}
+
+.qrcode {
+  padding: 20px;
+  text-align: center;
+}
+
+@media (max-width: 800px) {
+  .topnav a,
+  .topnav span {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 10px 12px;
+    font-size: 15px;
+  }
+}
