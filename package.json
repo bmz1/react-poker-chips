@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "nodemon ./web/server.js",
-    "start": "node ./web/server.js"
+    "start": "node ./web/server.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
