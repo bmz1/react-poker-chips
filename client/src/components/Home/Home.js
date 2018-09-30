@@ -28,10 +28,9 @@ class Home extends Component {
 
   onSubmit = () => {
     const { roomName, userName, chip } = this.state
-    console.log('click')
+
     socket.emit('join', this.state)
     socket.on('joined-to-room', () => {
-
       this.props.history.push({
         pathname: `/table/${this.state.roomName}`,
         state: {
@@ -45,8 +44,8 @@ class Home extends Component {
 
   render() {
     const { roomName, userName, chip } = this.state
-    const disabled = (userName === '' || roomName === '') ? true : false
-    console.log(disabled)
+    const disabled = userName === '' || roomName === '' ? true : false
+
     return (
       <div className="container">
         <div>
@@ -119,7 +118,11 @@ class Home extends Component {
             }}
           />
 
-          <button className="submit-btn" disabled={disabled} onClick={this.onSubmit}>
+          <button
+            className="submit-btn"
+            disabled={disabled}
+            onClick={this.onSubmit}
+          >
             Join
           </button>
         </div>

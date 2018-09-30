@@ -50,7 +50,7 @@ const Ranking = () => {
   const straightFlush = [cards[29], cards[30], cards[31], cards[32], cards[33]]
   const royalFlush = [cards[0], cards[12], cards[11], cards[10], cards[9]]
 
-  console.log(cards)
+  
   return (
     <div className="ranking">
       <h2>Hand strength</h2>
