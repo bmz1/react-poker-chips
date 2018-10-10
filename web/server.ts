@@ -1,23 +1,23 @@
-#!/usr/bin/env node
-
-require('dotenv').config()
-const app = require('../app')
-const debug = require('debug')('express-socket-poker:server')
-const http = require('http')
-const socket = require('../socket')
-const logger = require('../utils/logger')
+import * as dotenv from 'dotenv'
+dotenv.config()
+import app from '../app'
+import * as debug from 'debug'
+debug('express-socket-poker:server')
+import * as http from 'http'
+import { socket } from '../socket'
+import logger from '../utils/logger'
 
 const port = normalizePort(process.env.PORT || '8000')
 app.set('port', port)
 
-const server = http.createServer(app)
+const server: http.Server = http.createServer(app)
 
 server.listen(port)
 logger.info('Server is listening on port ' + port)
 server.on('error', onError)
 server.on('listening', onListening)
 
-socket.init(server);
+socket(server)
 
 function normalizePort(val) {
   const port = parseInt(val, 10)

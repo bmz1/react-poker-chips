@@ -7,18 +7,34 @@
   "private": true,
   "scripts": {
     "dev": "nodemon ./web/server.js",
-    "start": "node ./web/server.js",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "start": "npm run serve",
+    "build": "npm run build-ts",
+    "serve": "node dist/server.js",
+    "watch-node": "nodemon dist/web/server.js",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "heroku-postbuild": "npm run build-ts && cd client && npm install && npm run build"
   },
   "dependencies": {
+    "@types/cookie-parser": "^1.4.1",
+    "@types/debug": "0.0.31",
+    "@types/dotenv": "^4.0.3",
+    "@types/es6-promise": "^3.3.0",
+    "@types/express": "^4.16.0",
+    "@types/morgan": "^1.7.35",
+    "@types/socket.io": "^1.4.38",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "dotenv": "^6.0.0",
     "express": "~4.16.0",
     "morgan": "~1.9.0",
     "nodemon": "^1.18.4",
+    "redis": "^2.8.0",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
     "winston": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/redis": "^2.8.6"
   }
 }

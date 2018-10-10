@@ -34,6 +34,8 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
     backgroundColor: 'black',
+    margin: '5px auto',
+    padding: '10px',
     color: 'white'
   },
   rightIcon: {
@@ -63,13 +65,23 @@ class Table extends Component {
 
   componentDidMount() {
     if (!this.state.user) this.props.history.push('/')
+    
     //socket.emit('join', this.props.location.pathname)
     socket.on('connected', msg => {
+      socket.emit('join', this.state.user)
+      
       const newEntry = this.state.textArea.slice()
       newEntry.push(msg)
       this.setState({ textArea: newEntry })
     })
 
+    socket.on('history', (history) => {
+      const newEntry = this.state.textArea.slice()
+      history.map(h => 
+        newEntry.push(h)
+      )
+      this.setState({ textArea: newEntry })
+    })
     //this.setState({ user: this.props.location.state })
 
     socket.on('joined', msg => {
@@ -117,6 +129,18 @@ class Table extends Component {
 
   handleCall = () => {
     socket.emit('call', this.state.user)
+  }
+
+  handleCheck = () => {
+    socket.emit('check', this.state.user)
+  }
+
+  handleFold = () => {
+    socket.emit('fold', this.state.user)
+  }
+
+  handleAllIn = () => {
+    socket.emit('all-in', this.state.user)
   }
 
   handleScoreBoard = () => {
@@ -231,6 +255,7 @@ class Table extends Component {
                   variant="contained"
                   color="primary"
                   className={classes.button}
+                  onClick={this.handleCheck}
                 >
                   Check
                   <CheckIcon className={classes.rightIcon} />
@@ -240,6 +265,7 @@ class Table extends Component {
                   variant="contained"
                   color="primary"
                   className={classes.button}
+                  onClick={this.handleFold}
                 >
                   Fold
                   <FoldIcon className={classes.rightIcon} />
@@ -249,6 +275,7 @@ class Table extends Component {
                   variant="contained"
                   color="secondary"
                   className={classes.button}
+                  onClick={this.handleAllIn}
                 >
                   All-in
                   <AllInIcon className={classes.rightIcon} />

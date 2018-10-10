@@ -58,8 +58,9 @@
 }
 
 .action-btn {
-  display: block;
-  width: 600px;
+  display: flex;
+  flex-wrap: nowrap;
+  width: 700px;
   margin: 0 auto;
 }
 
@@ -73,22 +74,19 @@
   width: 600px;
   height: 35px;
   margin: 0 auto;
-  
 }
 .pot {
-  
   float: left;
 }
 
 .your-chips {
-  
   float: right;
 }
 @media (max-width: 1210px) {
   .header {
     margin-top: 10px;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     font-size: 1rem;
   }
 
@@ -113,13 +111,13 @@
   }
 
   .action-btn {
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 30px auto;
     width: 100%;
   }
   .chip-status {
     width: 300px;
     height: 35px;
-    
-    
   }
 }

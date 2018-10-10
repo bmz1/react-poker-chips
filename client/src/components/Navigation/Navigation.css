@@ -3,6 +3,9 @@
   background-color: #000;
   color: white;
 }
+.topnav:after {
+  clear: both;
+}
 
 .topnav a,
 .topnav span {

@@ -1,50 +1,81 @@
 .container {
-  background-image: url(../../assets/ace_pair.jpg);
+  margin-top: 0px;
+  background-image: url(../../assets/table.jpg);
   background-size: cover;
   width: 100%;
-  height: 100wh;
+  height: 700px;
 }
 
-.content {
-  position: relative;
-  max-width: 400px;
+.header-logo {
+  text-align: left;
+  max-width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  padding: 5px 20px 5px 20px;
+  padding: 5px 10px 5px 10px;
+}
+
+.input-box {
+  width: 300px;
+  height: 20px;
+  background-color: transparent;
+  color: white;
+  font-size: 1rem;
+  outline-width: 0;
+  border: 1px solid grey;
+  border-radius: 3px;
+  padding: 10px;
+  opacity: 0.8;
 }
 
 .room-input {
   text-align: center;
   display: block;
-  margin: 20px auto;
+  margin: 40px auto;
+  color: white;
+  border-radius: 5px;
+  /* background-color: #f5f5f7; */
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
-  max-width: 600px;
+  max-width: 400px;
+  -webkit-box-shadow: 6px 5px 61px -1px rgba(0, 0, 0, 0.63);
+  -moz-box-shadow: 6px 5px 61px -1px rgba(0, 0, 0, 0.63);
+  box-shadow: 6px 5px 61px -1px rgba(0, 0, 0, 0.63);
 }
 
 ::placeholder {
-  color: black;
-  opacity: 0.5;
+  color: white;
+  opacity: 0.8;
 }
 
 .submit-btn {
   display: block;
+  width: 140px;
   margin: 0 auto;
   background-color: transparent;
+  border: 1px solid white;
   color: white;
+  border-radius: 1px;
   font-size: 1rem;
   margin-top: 20px;
   padding: 14px 30px;
 }
 
 @media only screen and (max-width: 800px) {
-  input {
-    max-width: 300px;
+  .input-box {
+    width: 200px;
+    height: 10px;
+    background-color: transparent;
+    color: white;
+    font-size: 1rem;
+    outline-width: 0;
     border: 1px solid white;
-    background-color: white;
+    border-radius: 3px;
+    padding: 10px;
+    opacity: 0.8;
   }
   .container {
-    background-image: url(../../assets/ace_pair.jpg);
+    background-image: url(../../assets/table.jpg);
+    margin-top: 0;
     background-size: cover;
     width: 100%;
   }
@@ -52,12 +83,18 @@
     height: 5px;
   }
   .room-input {
-    text-align: center;
-    display: block;
-    margin: 0 auto;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    max-width: 600px;
+  text-align: center;
+  display: block;
+  margin: 10px auto;
+  color: white;
+  border-radius: 5px;
+  /* background-color:transparent; */
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  max-width: 300px;
+    /* -webkit-box-shadow: 6px 5px 61px -1px rgba(0, 0, 0, 0.63);
+  -moz-box-shadow: 6px 5px 61px -1px rgba(0, 0, 0, 0.63);
+  box-shadow: 6px 5px 61px -1px rgba(0, 0, 0, 0.63); */
   }
 }
 

@@ -1,7 +1,7 @@
-const winston = require('winston')
-const config = require('../config')
+import * as winston from 'winston'
+import config from '../config'
 
-module.exports = winston.createLogger({
+export default winston.createLogger({
   level: config.logger.level,
   transports: [
     new winston.transports.Console({

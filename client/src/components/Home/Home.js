@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 
 import './Home.css'
 
-export const socket = io.connect('https://react-poker-chips.herokuapp.com')
+export const socket = io.connect('http://localhost:8000')
 
 class Home extends Component {
   constructor(props) {
@@ -18,7 +18,11 @@ class Home extends Component {
 
   componentDidMount() {
     socket.on('usernameTaken', msg => alert(msg))
-  }
+    
+    this.setState({roomName: '',
+    userName: '',
+    chip: 500})
+}
 
   handleChange = e => {
     this.setState({
@@ -49,8 +53,8 @@ class Home extends Component {
     return (
       <div className="container">
         <div>
-          <div className="content">
-            <h1>React Poker Chips</h1>
+          <div className="header-logo">
+            
             <h2>Virtual poker chips</h2>
             <p>
               Add your name. Create a new room. Invite friends. Start playing.
@@ -66,17 +70,7 @@ class Home extends Component {
             value={roomName}
             onChange={this.handleChange}
             placeholder="type room name here"
-            style={{
-              width: '500px',
-              height: '30px',
-              backgroundColor: '#eee',
-              color: 'black',
-              fontSize: '1rem',
-              outlineWidth: '0',
-              border: '1px solid grey',
-              padding: '10px',
-              opacity: '0.8'
-            }}
+            className='input-box'
           />
           <p style={{ color: 'white', fontSize: '1.5rem' }}>Add your name</p>
           <input
@@ -85,17 +79,7 @@ class Home extends Component {
             value={userName}
             onChange={this.handleChange}
             placeholder="nickname"
-            style={{
-              width: '500px',
-              height: '30px',
-              backgroundColor: '#eee',
-              color: 'black',
-              fontSize: '1rem',
-              outlineWidth: '0',
-              border: '1px solid grey',
-              padding: '10px',
-              opacity: '0.8'
-            }}
+            className='input-box'
           />
 
           <p style={{ color: 'white', fontSize: '1.5rem' }}>Starting chips</p>
@@ -105,17 +89,7 @@ class Home extends Component {
             value={chip}
             onChange={this.handleChange}
             placeholder="Starting chips"
-            style={{
-              width: '500px',
-              height: '30px',
-              backgroundColor: '#eee',
-              color: 'black',
-              fontSize: '1rem',
-              outlineWidth: '0',
-              border: '1px solid grey',
-              padding: '10px',
-              opacity: '0.8'
-            }}
+            className='input-box'
           />
 
           <button
@@ -126,11 +100,11 @@ class Home extends Component {
             Join
           </button>
         </div>
-        <div className="chips">
+        {/* <div className="chips">
           <div className="pokerchip iso">100</div>
           <div className="pokerchip iso red">200</div>
           <div className="pokerchip iso blue">500</div>
-        </div>
+        </div> */}
       </div>
     )
   }
