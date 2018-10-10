@@ -34,7 +34,6 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
     backgroundColor: 'black',
-    margin: '5px auto',
     padding: '10px',
     color: 'white'
   },
@@ -65,24 +64,21 @@ class Table extends Component {
 
   componentDidMount() {
     if (!this.state.user) this.props.history.push('/')
+    this.setState({ user: this.props.location.state })
     
-    //socket.emit('join', this.props.location.pathname)
     socket.on('connected', msg => {
       socket.emit('join', this.state.user)
-      
+
       const newEntry = this.state.textArea.slice()
       newEntry.push(msg)
       this.setState({ textArea: newEntry })
     })
 
-    socket.on('history', (history) => {
+    socket.on('history', history => {
       const newEntry = this.state.textArea.slice()
-      history.map(h => 
-        newEntry.push(h)
-      )
+      history.map(h => newEntry.push(h))
       this.setState({ textArea: newEntry })
     })
-    //this.setState({ user: this.props.location.state })
 
     socket.on('joined', msg => {
       const newEntry = this.state.textArea.slice()
@@ -101,10 +97,22 @@ class Table extends Component {
 
       this.setState({ textArea: newEntry, table: msg.table })
     })
+
+    socket.on('info', msg => {
+      const newEntry = this.state.textArea.slice()
+      newEntry.push(msg.action)
+
+      this.setState({ textArea: newEntry, table: msg.table })
+    })
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    
     this.scrollToBottom()
+  
+    if (this.props.location.state !== prevProps.location.state) {
+      this.setState({ user: this.props.location.state });
+    }
   }
 
   handleChangeTab = (event, value) => {

@@ -4,7 +4,8 @@ import { withRouter } from 'react-router-dom'
 
 import './Home.css'
 
-export const socket = io.connect('https://react-poker-chips.herokuapp.com')
+const socketURL = process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'https://react-poker-chips.herokuapp.com'
+export const socket = io.connect(socketURL)
 
 class Home extends Component {
   constructor(props) {

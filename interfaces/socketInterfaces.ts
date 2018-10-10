@@ -1,23 +1,23 @@
 export interface Client {
   id: string
+  name: string
   room: string
 }
 
-export interface User {
+export interface Player {
   id: string
   name: string
-  chip: number
+  chip?: number
   ready: boolean
 }
 
 export interface Room {
-  users: Array<User>
+  users: Array<Player>
   chip: number
   pot: number
   currentBet: number
 }
 
-export interface Table {
+export interface Tables {
   [key: string]: Room
-  
 }

@@ -10,7 +10,7 @@
     "start": "npm run serve",
     "build": "npm run build-ts",
     "serve": "node dist/server.js",
-    "watch-node": "nodemon dist/web/server.js",
+    "watch-node": "nodemon dist/web/server.js --inspect",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "heroku-postbuild": "npm run build-ts && cd client && npm install && npm run build"

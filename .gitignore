@@ -71,6 +71,6 @@ typings/
 
 # Serverless directories
 .serverless
-
+dist/
 /client/node_modules
 /client/.env
