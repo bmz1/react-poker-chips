@@ -10,15 +10,22 @@ class Navigation extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      qr: `http://localhost${this.props.location.pathname}`,
+      qr: '',
       open: false
     }
   }
+  componentDidMount() {
+    if (this.props.location.pathname.startsWith('table')) {
+    this.setState({qr: `http://localhost:3000/?roomName=${this.props.location.pathname.slice(7)}`})
+    }
+  }
+
   handleClickOpen = () => this.setState({ open: true })
   handleClose = () => this.setState({ open: false })
 
   render() {
     const { pathname } = this.props.location
+    
     return (
       <div>
         <div className="topnav">

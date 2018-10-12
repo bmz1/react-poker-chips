@@ -60,6 +60,17 @@
   padding: 14px 30px;
 }
 
+.switch {
+  display: flex;
+  justify-content: center;
+  height: 0px;
+  padding-bottom: 25px;
+}
+
+.switch-active {
+  color: #317ddd;
+}
+
 @media only screen and (max-width: 800px) {
   .input-box {
     width: 200px;

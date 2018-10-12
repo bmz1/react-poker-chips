@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
+import { view } from 'react-easy-state'
 
+import store from '../../store/store'
 import { socket } from '../Home/Home'
 
 import { withStyles } from '@material-ui/core/styles'
@@ -16,6 +18,39 @@ import CheckIcon from '@material-ui/icons/Check'
 import FoldIcon from '@material-ui/icons/Close'
 import AllInIcon from '@material-ui/icons/AttachMoney'
 import './Table.css'
+
+socket.on('connected', msg => {
+  socket.emit('join', store.user)
+  store.addMessage(msg)
+})
+
+socket.on('joined', msg => {
+  store.addMessage(msg.action)
+  store.set('table', msg.table)
+})
+
+socket.on('history', history => {
+  history.map(h => store.addMessage(h))
+})
+
+socket.on('message', msg => {
+  store.addMessage(msg.action)
+  store.set('table', msg.table)
+})
+
+socket.on('score', score => {
+  store.set('scores', score)
+})
+
+socket.on('take', msg => {
+  store.addMessage(msg.action)
+  store.set('table', msg.table)
+})
+
+socket.on('info', msg => {
+  store.addMessage(msg.action)
+  store.set('table', msg.table)
+})
 
 const styles = theme => ({
   root: {
@@ -45,118 +80,65 @@ const styles = theme => ({
 class Table extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      tabValue: 'actions',
-      socket: '',
-      textArea: [],
-      slider: 0,
-      user: this.props.location.state,
-      scores: [],
-      pot: 0,
-      table: {
-        users: [],
-        chip: 0,
-        pot: 0
-      }
-    }
+
     this.scrollDiv = React.createRef()
   }
 
   componentDidMount() {
-    if (!this.state.user) this.props.history.push('/')
-    this.setState({ user: this.props.location.state })
-    
-    socket.on('connected', msg => {
-      socket.emit('join', this.state.user)
-
-      const newEntry = this.state.textArea.slice()
-      newEntry.push(msg)
-      this.setState({ textArea: newEntry })
-    })
-
-    socket.on('history', history => {
-      const newEntry = this.state.textArea.slice()
-      history.map(h => newEntry.push(h))
-      this.setState({ textArea: newEntry })
-    })
-
-    socket.on('joined', msg => {
-      const newEntry = this.state.textArea.slice()
-      newEntry.push(msg.action)
-
-      this.setState({ textArea: newEntry, table: msg.table })
-    })
-
-    socket.on('score', score => {
-      this.setState({ scores: score })
-    })
-
-    socket.on('take', msg => {
-      const newEntry = this.state.textArea.slice()
-      newEntry.push(msg.action)
-
-      this.setState({ textArea: newEntry, table: msg.table })
-    })
-
-    socket.on('info', msg => {
-      const newEntry = this.state.textArea.slice()
-      newEntry.push(msg.action)
-
-      this.setState({ textArea: newEntry, table: msg.table })
-    })
+    store.set('user', this.props.location.state)
+    if (!Object.keys(store.user).length) this.props.history.push('/')
   }
 
   componentDidUpdate(prevProps) {
-    
     this.scrollToBottom()
-  
+
     if (this.props.location.state !== prevProps.location.state) {
-      this.setState({ user: this.props.location.state });
+      store.set('user', this.props.location.state)
     }
   }
 
   handleChangeTab = (event, value) => {
-    this.setState({ tabValue: value })
+    store.set('tabValue', value)
   }
 
   handleChangeSlider = (event, value) => {
-    this.setState({ slider: value })
+    store.set('slider', value)
   }
 
   handleChangeInput = e => {
-    this.setState({ slider: e.target.value })
+    store.set('slider', e.target.value)
   }
 
   handleBet = () => {
-    if (this.state.slider === 0) return
-    const obj = Object.assign(this.state.user, {
-      bet: parseInt(this.state.slider, 10)
+    if (store.slider === 0) return
+    const obj = Object.assign(store.user, {
+      bet: parseInt(store.slider, 10)
     })
     socket.emit('bet', obj)
   }
 
   handleCall = () => {
-    socket.emit('call', this.state.user)
+    socket.emit('call', store.user)
   }
 
   handleCheck = () => {
-    socket.emit('check', this.state.user)
+    socket.emit('check', store.user)
   }
 
   handleFold = () => {
-    socket.emit('fold', this.state.user)
+    socket.emit('fold', store.user)
   }
 
   handleAllIn = () => {
-    socket.emit('all-in', this.state.user)
+    socket.emit('all-in', store.user)
   }
 
   handleScoreBoard = () => {
-    socket.emit('scoreboard', this.state.user)
+    socket.emit('scoreboard', store.user)
   }
 
   handleTake = () => {
-    socket.emit('take', this.state.user)
+    socket.emit('take', store.user)
   }
 
   scrollToBottom = () => {
@@ -170,25 +152,25 @@ class Table extends Component {
   render() {
     const { pathname } = this.props.location
     const pathName = pathname.slice(7)
-    const { tabValue, textArea, slider, table } = this.state
     const { classes } = this.props
 
-    const listMessages = textArea.map((text, i) => (
+    const listMessages = store.textArea.map((text, i) => (
       <li key={i} className="show">
         {text}
       </li>
     ))
 
-    const user = table.users.find(
-      u => u.name === this.props.location.state.userName
-    )
-
+    const user = store.table.users.find(u => u.name === store.user.userName)
     return (
       <div className="table">
         <div className="header">Table ID: {pathName}</div>
         <div className={classes.root}>
           <AppBar position="static" className={classes.appbar}>
-            <Tabs value={tabValue} onChange={this.handleChangeTab} centered>
+            <Tabs
+              value={store.tabValue}
+              onChange={this.handleChangeTab}
+              centered
+            >
               <Tab value="actions" label="Table" className={classes.tab} />
               <Tab
                 value="scoreboard"
@@ -198,7 +180,7 @@ class Table extends Component {
               />
             </Tabs>
           </AppBar>
-          {tabValue === 'actions' && (
+          {store.tabValue === 'actions' && (
             <TabContainer>
               <div>
                 <ul ref={this.scrollDiv} className="text-area">
@@ -211,13 +193,13 @@ class Table extends Component {
                 </ul>
               </div>
               <div className="chip-status">
-                <p className="pot">POT: {this.state.table.pot}</p>
+                <p className="pot">POT: {store.table.pot}</p>
                 <p className="your-chips">Your chips: {user && user.chip}</p>
               </div>
               <div className="action-buttons">
                 <input
                   type="number"
-                  value={slider === '' ? 0 : slider}
+                  value={store.slider === '' ? 0 : store.slider}
                   style={{
                     display: 'block',
                     width: '100px',
@@ -230,9 +212,9 @@ class Table extends Component {
                 />
 
                 <Slider
-                  value={slider === '' ? 0 : slider}
+                  value={store.slider === '' ? 0 : store.slider}
                   step={10}
-                  max={parseInt(this.state.table.chip, 10)}
+                  max={parseInt(store.table.chip, 10)}
                   aria-labelledby="slider"
                   onChange={this.handleChangeSlider}
                   style={{ display: 'block', width: '250px', margin: '0 auto' }}
@@ -301,13 +283,13 @@ class Table extends Component {
               </div>
             </TabContainer>
           )}
-          {tabValue === 'scoreboard' && (
+          {store.tabValue === 'scoreboard' && (
             <TabContainer>
               <div className="scoreboard">
                 <ol>
-                  {this.state.scores.map((el, i) => (
+                  {store.scores.map((el, i) => (
                     <li key={i}>
-                      {el.name} - {el.chip}
+                      {el.name} - {el.chip} chips
                     </li>
                   ))}
                 </ol>
@@ -320,4 +302,4 @@ class Table extends Component {
   }
 }
 
-export default withRouter(withStyles(styles)(Table))
+export default withRouter(withStyles(styles)(view(Table)))

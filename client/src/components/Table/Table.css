@@ -66,8 +66,10 @@
 
 .scoreboard {
   display: block;
-  width: 300px;
+  width: 400px;
+  text-align: center;
   margin: 0 auto;
+  font-size: 18px;
 }
 
 .chip-status {
@@ -81,6 +83,10 @@
 
 .your-chips {
   float: right;
+}
+
+ol {
+  list-style: decimal inside none;
 }
 @media (max-width: 1210px) {
   .header {
@@ -111,13 +117,19 @@
   }
 
   .action-btn {
-    display: flex;
-    flex-wrap: wrap;
+    display: block;
+    text-align: center;
     margin: 30px auto;
     width: 100%;
   }
   .chip-status {
     width: 300px;
     height: 35px;
+  }
+  .scoreboard {
+    display: block;
+    width: 300px;
+    text-align: center;
+    margin: 0 auto;
   }
 }
