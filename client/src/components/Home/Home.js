@@ -70,7 +70,7 @@ class Home extends Component {
 
   render() {
     const { roomName, userName, chip, join } = this.state
-    const disabled = userName === '' || roomName === '' ? true : false
+    const disabled = (userName === '' && typeof username !== 'string') || (roomName === '' && typeof roomName !== 'string') ? true : false
     
     return (
       <div className="container">

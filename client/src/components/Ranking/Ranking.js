@@ -57,8 +57,8 @@ const Ranking = () => {
 
       <h3>High card</h3>
       <div className="deck">
-        {highCard.map(card => (
-          <div key={card.id} className={`card ${suitColor[card.suit]}`}>
+        {highCard.map((card, i) => (
+          <div key={i} className={`card ${suitColor[card.suit]}`}>
             <span className="card-suit card-suit-top">{card.suit}</span>
             <span className="card-number">{card.rank}</span>
             <span className="card-suit card-suit-bottom">{card.suit}</span>
@@ -68,8 +68,8 @@ const Ranking = () => {
 
       <h3>One pair</h3>
       <div className="deck">
-        {onePair.map(card => (
-          <div key={card.id * 100} className={`card ${suitColor[card.suit]}`}>
+        {onePair.map((card, i) => (
+          <div key={i} className={`card ${suitColor[card.suit]}`}>
             <span className="card-suit card-suit-top">{card.suit}</span>
             <span className="card-number">{card.rank}</span>
             <span className="card-suit card-suit-bottom">{card.suit}</span>
@@ -79,8 +79,8 @@ const Ranking = () => {
 
       <h3>Two pair</h3>
       <div className="deck">
-        {twoPair.map(card => (
-          <div key={card.id * 200} className={`card ${suitColor[card.suit]}`}>
+        {twoPair.map((card, i) => (
+          <div key={i} className={`card ${suitColor[card.suit]}`}>
             <span className="card-suit card-suit-top">{card.suit}</span>
             <span className="card-number">{card.rank}</span>
             <span className="card-suit card-suit-bottom">{card.suit}</span>
@@ -90,8 +90,8 @@ const Ranking = () => {
 
       <h3>3 of a kind</h3>
       <div className="deck">
-        {threeOfAKind.map(card => (
-          <div key={card.id * 300} className={`card ${suitColor[card.suit]}`}>
+        {threeOfAKind.map((card, i) => (
+          <div key={i} className={`card ${suitColor[card.suit]}`}>
             <span className="card-suit card-suit-top">{card.suit}</span>
             <span className="card-number">{card.rank}</span>
             <span className="card-suit card-suit-bottom">{card.suit}</span>
@@ -101,8 +101,8 @@ const Ranking = () => {
 
       <h3>Straight</h3>
       <div className="deck">
-        {straight.map(card => (
-          <div key={card.id * 400} className={`card ${suitColor[card.suit]}`}>
+        {straight.map((card, i) => (
+          <div key={i} className={`card ${suitColor[card.suit]}`}>
             <span className="card-suit card-suit-top">{card.suit}</span>
             <span className="card-number">{card.rank}</span>
             <span className="card-suit card-suit-bottom">{card.suit}</span>
@@ -112,8 +112,8 @@ const Ranking = () => {
 
       <h3>Flush</h3>
       <div className="deck">
-        {flush.map(card => (
-          <div key={card.id} className={`card ${suitColor[card.suit]}`}>
+        {flush.map((card, i) => (
+          <div key={i} className={`card ${suitColor[card.suit]}`}>
             <span className="card-suit card-suit-top">{card.suit}</span>
             <span className="card-number">{card.rank}</span>
             <span className="card-suit card-suit-bottom">{card.suit}</span>
@@ -123,8 +123,8 @@ const Ranking = () => {
 
       <h3>Full House</h3>
       <div className="deck">
-        {fullHouse.map(card => (
-          <div key={card.id} className={`card ${suitColor[card.suit]}`}>
+        {fullHouse.map((card, i) => (
+          <div key={i} className={`card ${suitColor[card.suit]}`}>
             <span className="card-suit card-suit-top">{card.suit}</span>
             <span className="card-number">{card.rank}</span>
             <span className="card-suit card-suit-bottom">{card.suit}</span>
@@ -134,8 +134,8 @@ const Ranking = () => {
 
       <h3>4 of a kind</h3>
       <div className="deck">
-        {fourOfAKind.map(card => (
-          <div key={card.id} className={`card ${suitColor[card.suit]}`}>
+        {fourOfAKind.map((card, i) => (
+          <div key={i} className={`card ${suitColor[card.suit]}`}>
             <span className="card-suit card-suit-top">{card.suit}</span>
             <span className="card-number">{card.rank}</span>
             <span className="card-suit card-suit-bottom">{card.suit}</span>
@@ -145,8 +145,8 @@ const Ranking = () => {
 
       <h3>Straight flush</h3>
       <div className="deck">
-        {straightFlush.map(card => (
-          <div key={card.id} className={`card ${suitColor[card.suit]}`}>
+        {straightFlush.map((card, i) => (
+          <div key={i} className={`card ${suitColor[card.suit]}`}>
             <span className="card-suit card-suit-top">{card.suit}</span>
             <span className="card-number">{card.rank}</span>
             <span className="card-suit card-suit-bottom">{card.suit}</span>
@@ -156,8 +156,8 @@ const Ranking = () => {
 
       <h3>Royal flush</h3>
       <div className="deck">
-        {royalFlush.map(card => (
-          <div key={card.id} className={`card ${suitColor[card.suit]}`}>
+        {royalFlush.map((card, i) => (
+          <div key={i} className={`card ${suitColor[card.suit]}`}>
             <span className="card-suit card-suit-top">{card.suit}</span>
             <span className="card-number">{card.rank}</span>
             <span className="card-suit card-suit-bottom">{card.suit}</span>

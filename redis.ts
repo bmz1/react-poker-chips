@@ -17,7 +17,11 @@ client.on('error', err => {
 })
 
 export const pushMessage = async (roomKey: string, data: string) => {
+  const date = new Date().setHours(5)
   await client.lpush(roomKey, data)
+  client.expireat(roomKey, date)
+  
+
 }
 
 export const getMessageHistory = async (roomKey: string) => {

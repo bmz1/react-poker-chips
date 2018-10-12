@@ -18,6 +18,18 @@ const tableStore = store({
   },
   set(name, value) {
     tableStore[name] = value
+  },
+  reset() {
+    tableStore.textArea = []
+    tableStore.slider = 0
+    tableStore.user = {}
+    tableStore.scores = []
+    tableStore.pot = 0
+    tableStore.table = {
+      users: [],
+      chip: 0,
+      pot: 0
+    }
   }
 })
 

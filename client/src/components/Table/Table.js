@@ -52,6 +52,10 @@ socket.on('info', msg => {
   store.set('table', msg.table)
 })
 
+socket.on('disconnect', () => {
+  store.reset()
+})
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -85,8 +89,9 @@ class Table extends Component {
   }
 
   componentDidMount() {
-    store.set('user', this.props.location.state)
+    if (this.props.location.state) store.set('user', this.props.location.state)
     if (!Object.keys(store.user).length) this.props.history.push('/')
+    console.log(store.user)
   }
 
   componentDidUpdate(prevProps) {

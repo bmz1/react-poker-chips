@@ -1,6 +1,6 @@
 import { pushMessage, getMessageHistory } from './redis'
 import { Table, User } from './interfaces/socketClasses'
-import { Player, Client } from './interfaces/socketInterfaces'
+import { Player, Client, clientData } from './interfaces/socketInterfaces'
 import * as socketIO from 'socket.io'
 import logger from './utils/logger'
 import { Server } from 'http'
@@ -56,7 +56,7 @@ export const socket = (server: Server) => {
       }
     )
 
-    socket.on('bet', data => {
+    socket.on('bet', (data: clientData) => {
       tables.bet(data)
       const message = {
         action: `[BET]: ${data.userName} bet ${data.bet} chips`,
@@ -66,7 +66,7 @@ export const socket = (server: Server) => {
       pushMessage(data.roomName, message.action)
     })
 
-    socket.on('call', data => {
+    socket.on('call', (data: clientData) => {
       tables.call(data)
       const message = {
         action: `[CALL]: ${data.userName} called ${tables.getCurrentBet(
@@ -79,12 +79,12 @@ export const socket = (server: Server) => {
       pushMessage(data.roomName, message.action)
     })
 
-    socket.on('scoreboard', data => {
+    socket.on('scoreboard', (data: clientData) => {
       const scores = tables.getScores(data)
       io.in(data.roomName).emit('score', scores)
     })
 
-    socket.on('take', data => {
+    socket.on('take', (data: clientData) => {
       tables.take(data)
       const message = {
         action: `[WIN]: ${data.userName} won the pot.`,
@@ -95,7 +95,7 @@ export const socket = (server: Server) => {
       pushMessage(data.roomName, message.action)
     })
 
-    socket.on('check', data => {
+    socket.on('check', (data: clientData) => {
       const message = {
         action: `[CHECK]: ${data.userName} checked.`,
         table: tables.sendRoom(data.roomName)
@@ -105,7 +105,7 @@ export const socket = (server: Server) => {
       pushMessage(data.roomName, message.action)
     })
 
-    socket.on('fold', (data) => {
+    socket.on('fold', (data: clientData) => {
       const message = {
         action: `[FOLD]: ${data.userName} did fold.`,
         table: tables.sendRoom(data.roomName)
@@ -115,7 +115,7 @@ export const socket = (server: Server) => {
       pushMessage(data.roomName, message.action)
     })
 
-    socket.on('all-in', data => {
+    socket.on('all-in', (data: clientData) => {
       tables.allIn(data)
 
       const message = {

@@ -21,3 +21,10 @@ export interface Room {
 export interface Tables {
   [key: string]: Room
 }
+
+export interface clientData {
+  roomName: string
+  userName: string
+  chip: number
+  bet?: number
+}
