@@ -1,8 +1,9 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 
 import './Ranking.css'
 
-const Ranking = () => {
+const Ranking = (props) => {
   const cards = []
   const ranks = [
     'A',
@@ -53,6 +54,7 @@ const Ranking = () => {
   
   return (
     <div className="ranking">
+    <button onClick={props.history.goBack} style={{position: 'sticky', top: '10px', float: 'right', padding: '12px 24px', borderRadius: '5px', backgroundColor: 'black', color: 'white'}}>Back</button>
       <h2>Hand strength</h2>
 
       <h3>High card</h3>
@@ -168,4 +170,4 @@ const Ranking = () => {
   )
 }
 
-export default Ranking
+export default withRouter(Ranking)

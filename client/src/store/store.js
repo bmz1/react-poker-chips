@@ -12,6 +12,7 @@ const tableStore = store({
     chip: 0,
     pot: 0
   },
+  confirmTake: false,
 
   addMessage(msg) {
     tableStore.textArea.push(msg)
@@ -30,6 +31,13 @@ const tableStore = store({
       chip: 0,
       pot: 0
     }
+  },
+  resetSlider() {
+    tableStore.confirmTake = false
+    tableStore.slider = 0
+  },
+  take() {
+    tableStore.slider = tableStore.table.pot
   }
 })
 

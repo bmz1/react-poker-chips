@@ -27,6 +27,10 @@ export class Table {
   bet(data): void {
     const user = this.getUser(data)
     if (user) {
+      if (user.chip < 0 || user.chip === 0) {
+        user.chip = 0
+        return
+      }
       user.chip -= data.bet
       this.tables[data.roomName].pot += data.bet
       this.tables[data.roomName].currentBet = data.bet
@@ -111,7 +115,7 @@ export class Table {
   take(data): void {
     const user = this.getUser(data)
     if (user && this.tables[data.roomName].pot !== 0) {
-      user.chip += this.tables[data.roomName].pot
+      user.chip += data.take
       this.tables[data.roomName].pot = 0
       this.tables[data.roomName].currentBet = 0
     }

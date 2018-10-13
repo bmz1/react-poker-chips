@@ -3,13 +3,17 @@ import io from 'socket.io-client'
 import Switch from '@material-ui/core/Switch'
 import { withRouter } from 'react-router-dom'
 
+import AlertMessage from '../Dialog/Dialog'
 import './Home.css'
 
 const socketURL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:8000'
     : 'https://react-poker-chips.herokuapp.com'
+
 export const socket = io.connect(socketURL)
+
+
 
 class Home extends Component {
   constructor(props) {
@@ -18,12 +22,14 @@ class Home extends Component {
       roomName: '',
       userName: '',
       chip: 500,
-      join: false
+      join: false,
+      open: false
     }
   }
 
   componentDidMount() {
-    socket.on('usernameTaken', msg => alert(msg))
+    
+    socket.on('usernameTaken', msg => this.setState({open: true}))    
 
     this.setState({
       roomName: '',
@@ -67,9 +73,16 @@ class Home extends Component {
   handleSwitchChange = (e) => {
     this.setState({ join: !this.state.join })
   }
+  handleDialogOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleDialogClose = () => {
+    this.setState({ open: false });
+  };
 
   render() {
-    const { roomName, userName, chip, join } = this.state
+    const { roomName, userName, chip, join, open } = this.state
     const disabled = (userName === '' && typeof username !== 'string') || (roomName === '' && typeof roomName !== 'string') ? true : false
     
     return (
@@ -142,6 +155,7 @@ class Home extends Component {
           <div className="pokerchip iso red">200</div>
           <div className="pokerchip iso blue">500</div>
         </div> */}
+        <AlertMessage open={open} handleDialogClose={this.handleDialogClose} message='Username already taken. Please choose another name' />
       </div>
     )
   }

@@ -78,6 +78,11 @@ const styles = theme => ({
   },
   rightIcon: {
     marginLeft: theme.spacing.unit
+  },
+  confirmButton: {
+    backgroundColor: 'red',
+    padding: '10px',
+    color: 'white'
   }
 })
 
@@ -91,7 +96,6 @@ class Table extends Component {
   componentDidMount() {
     if (this.props.location.state) store.set('user', this.props.location.state)
     if (!Object.keys(store.user).length) this.props.history.push('/')
-    console.log(store.user)
   }
 
   componentDidUpdate(prevProps) {
@@ -115,7 +119,9 @@ class Table extends Component {
   }
 
   handleBet = () => {
-    if (store.slider === 0) return
+    const user = store.table.users.find(u => u.name === store.user.userName)
+    if (store.slider === 0 || user.chip === 0 || store.slider > user.chip)
+      return
     const obj = Object.assign(store.user, {
       bet: parseInt(store.slider, 10)
     })
@@ -123,6 +129,8 @@ class Table extends Component {
   }
 
   handleCall = () => {
+    const user = store.table.users.find(u => u.name === store.user.userName)
+    if (store.table.currentBet === 0 || user.chip === 0) return
     socket.emit('call', store.user)
   }
 
@@ -135,6 +143,8 @@ class Table extends Component {
   }
 
   handleAllIn = () => {
+    const user = store.table.users.find(u => u.name === store.user.userName)
+    if (user.chip === 0) return
     socket.emit('all-in', store.user)
   }
 
@@ -143,7 +153,74 @@ class Table extends Component {
   }
 
   handleTake = () => {
-    socket.emit('take', store.user)
+    store.take()
+    store.set('confirmTake', true)
+  }
+  handleConfirmTake = () => {
+    const obj = Object.assign(store.user, { take: store.slider })
+
+    socket.emit('take', obj)
+    store.resetSlider()
+  }
+
+  renderSwitch = param => {
+    let text
+    const splitText = param.split(':')
+    switch (splitText[0]) {
+      case '[BET]':
+        text = (
+          <div>
+            <span style={{ color: 'red' }}>{splitText[0]}</span> {splitText[1]}
+          </div>
+        )
+        break
+      case '[CALL]':
+        text = (
+          <div>
+            <span style={{ color: 'blue' }}>{splitText[0]}</span> {splitText[1]}
+          </div>
+        )
+        break
+      case '[CHECK]':
+        text = (
+          <div>
+            <span style={{ color: 'green' }}>{splitText[0]}</span>{' '}
+            {splitText[1]}
+          </div>
+        )
+        break
+      case '[FOLD]':
+        text = (
+          <div>
+            <span style={{ color: 'brown' }}>{splitText[0]}</span>{' '}
+            {splitText[1]}
+          </div>
+        )
+        break
+      case '[ALL-IN]':
+        text = (
+          <div>
+            <span style={{ color: 'red' }}>{splitText[0]}</span> {splitText[1]}
+          </div>
+        )
+        break
+      case '[WIN]':
+        text = (
+          <div>
+            {' '}
+            <span style={{ color: 'green' }}>{splitText[0]}</span>
+            {splitText[1]}
+          </div>
+        )
+        break
+      default:
+        text = (
+          <div>
+            <span>{splitText[0]}</span> {splitText[1]}
+          </div>
+        )
+    }
+    return text
   }
 
   scrollToBottom = () => {
@@ -159,13 +236,16 @@ class Table extends Component {
     const pathName = pathname.slice(7)
     const { classes } = this.props
 
-    const listMessages = store.textArea.map((text, i) => (
-      <li key={i} className="show">
-        {text}
-      </li>
-    ))
+    const listMessages = store.textArea.map((text, i) => {
+      return (
+        <li key={i} className="show">
+          {this.renderSwitch(text)}
+        </li>
+      )
+    })
 
     const user = store.table.users.find(u => u.name === store.user.userName)
+
     return (
       <div className="table">
         <div className="header">Table ID: {pathName}</div>
@@ -204,7 +284,7 @@ class Table extends Component {
               <div className="action-buttons">
                 <input
                   type="number"
-                  value={store.slider === '' ? 0 : store.slider}
+                  value={store.slider === '' ? 0 : Number(store.slider)}
                   style={{
                     display: 'block',
                     width: '100px',
@@ -217,9 +297,15 @@ class Table extends Component {
                 />
 
                 <Slider
-                  value={store.slider === '' ? 0 : store.slider}
+                  value={store.slider === '' ? 0 : Number(store.slider)}
                   step={10}
-                  max={parseInt(store.table.chip, 10)}
+                  max={
+                    user
+                      ? store.confirmTake
+                        ? store.table.pot
+                        : parseInt(user.chip, 10)
+                      : 0
+                  }
                   aria-labelledby="slider"
                   onChange={this.handleChangeSlider}
                   style={{ display: 'block', width: '250px', margin: '0 auto' }}
@@ -276,15 +362,27 @@ class Table extends Component {
                   <AllInIcon className={classes.rightIcon} />
                 </Button>
 
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  className={classes.button}
-                  onClick={this.handleTake}
-                >
-                  Take
-                  <AllInIcon className={classes.rightIcon} />
-                </Button>
+                {store.confirmTake ? (
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.confirmButton}
+                    onClick={this.handleConfirmTake}
+                  >
+                    Confirm
+                    <AllInIcon className={classes.rightIcon} />
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    onClick={this.handleTake}
+                  >
+                    Take
+                    <AllInIcon className={classes.rightIcon} />
+                  </Button>
+                )}
               </div>
             </TabContainer>
           )}

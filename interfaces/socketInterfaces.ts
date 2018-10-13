@@ -27,4 +27,5 @@ export interface clientData {
   userName: string
   chip: number
   bet?: number
+  take?: number
 }
